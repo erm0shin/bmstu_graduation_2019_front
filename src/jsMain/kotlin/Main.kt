@@ -3,7 +3,7 @@ import kotlinx.coroutines.Job
 import react.buildElement
 import react.dom.div
 import react.dom.render
-//import view.ApplicationComponent
+import views.ApplicationComponent
 import kotlin.browser.document
 import kotlin.coroutines.CoroutineContext
 
@@ -11,21 +11,21 @@ private class Application : CoroutineScope {
     override val coroutineContext: CoroutineContext = Job()
 
     fun start() {
-        document.getElementById("react-app")?.let {
+        document.getElementById("main_menu")?.let {
             render(buildElement {
-//                child(ApplicationComponent::class) {
-//                    attrs.coroutineScope = this@Application
-//                }
-                div {
-                    +"Text from frontend part"
+                child(ApplicationComponent::class) {
+                    attrs.coroutineScope = this@Application
                 }
+//                div {
+//                    +"Text from frontend part"
+//                }
             }, it)
         }
     }
 }
 
 fun main() {
-    GlobalStyles.inject()
+//    GlobalStyles.inject()
 
     Application().start()
 }

@@ -1,5 +1,3 @@
-//import database.Posts
-//import database.database
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
@@ -9,22 +7,10 @@ import io.ktor.http.content.files
 import io.ktor.http.content.static
 import io.ktor.jackson.jackson
 import io.ktor.routing.get
-import io.ktor.routing.route
 import io.ktor.routing.routing
-import kotlinx.coroutines.launch
 import kotlinx.css.*
 import kotlinx.css.properties.lh
 import kotlinx.html.*
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.list
-//import model.Post
-//import model.PostWithComments
-//import network.PostClient
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.batchInsert
-//import rpc.rpc
-//import services.PostService
-//import services.PostWithCommentsService
 
 private val globalCss = CSSBuilder().apply {
     body {
@@ -38,28 +24,33 @@ private val globalCss = CSSBuilder().apply {
     }
 }
 
+private val blockCSS = CSSBuilder().apply {
+    body {
+        border = "2px solid #aaa719"
+        backgroundColor = Color("#d4d37f")
+        marginBottom = 20.px
+        padding = 10.px.toString()
+        width = 80.pct
+    }
+}
+
+private val menuCSS = CSSBuilder().apply {
+    body {
+        display = Display.flex
+        padding = 10.px.toString()
+        width = LinearDimension("25%")
+        marginLeft = LinearDimension("37.5%")
+        color = Color("#fff")
+        fontSize = 1.3.em
+        flexDirection = FlexDirection.column
+        alignItems = Align.center
+    }
+}
+
 fun Application.main() {
     install(ContentNegotiation) {
         jackson {}
     }
-
-//    database {
-//        SchemaUtils.create(Posts)
-//    }
-
-//    launch {
-//        val result = PostClient(this.coroutineContext).getPosts()
-//        val posts = Json.parse(Post.serializer().list, result)
-//
-//        database {
-//            Posts.batchInsert(posts) {
-//                this[Posts.postId] = it.id
-//                this[Posts.userId] = it.userId
-//                this[Posts.title] = it.title.take(50)
-//                this[Posts.body] = it.body.take(255)
-//            }
-//        }
-//    }
 
     routing {
         get("/") {
@@ -69,17 +60,17 @@ fun Application.main() {
                         charset = "utf-8"
                     }
                     title {
-                        +"Kotlin full stack application demo"
+                        +"BMSTU Graduation Application"
                     }
-                    style {
-                        unsafe {
-                            +globalCss.toString()
-                        }
-                    }
+//                    style {
+//                        unsafe {
+//                            +globalCss.toString()
+//                        }
+//                    }
                 }
                 body {
                     div {
-                        id = "react-app"
+                        id = "main_menu"
                         +"Loading..."
                     }
                     script(src = "/main.bundle.js") {
