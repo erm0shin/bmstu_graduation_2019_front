@@ -4,15 +4,6 @@ import kotlinx.coroutines.CoroutineScope
 import react.*
 import utils.ApplicationPage
 
-//private object ApplicationStyles : StyleSheet("ApplicationStyles", isStatic = true) {
-//    val wrapper by css {
-//        padding(32.px, 16.px)
-//    }
-//
-//    val post by css {
-//        marginBottom = 32.px
-//    }
-//}
 
 interface ApplicationProps : RProps {
     var coroutineScope: CoroutineScope

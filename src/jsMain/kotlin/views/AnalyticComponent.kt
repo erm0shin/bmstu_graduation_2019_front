@@ -5,6 +5,9 @@ import kotlinx.html.js.onClickFunction
 import react.*
 import react.dom.button
 import react.dom.div
+import styled.css
+import styled.styledDiv
+import styles.CommonStyles
 import utils.ApplicationPage
 
 interface AnalyticProps : RProps {
@@ -23,13 +26,39 @@ class AnalyticComponent : RComponent<AnalyticProps, AnalyticState>() {
         get() = props.coroutineScope.coroutineContext
 
     override fun RBuilder.render() {
-        div {
-            +"hello from ANALYTIC"
-        }
-        button {
-            +"Back to main menu"
-            attrs.onClickFunction = {
-                props.updatePage(ApplicationPage.MAIN)
+        styledDiv {
+            css {
+                +CommonStyles.common
+            }
+            styledDiv {
+                +"hello from ANALYTIC"
+                css {
+                    +CommonStyles.box
+                }
+                div {
+                    +"Text3"
+                }
+                div {
+                    +"Text4"
+                }
+            }
+            styledDiv {
+                +"hello from ANALYTIC"
+                css {
+                    +CommonStyles.box
+                }
+                div {
+                    +"Text3"
+                }
+                div {
+                    +"Text4"
+                }
+            }
+            button {
+                +"Back to main menu"
+                attrs.onClickFunction = {
+                    props.updatePage(ApplicationPage.MAIN)
+                }
             }
         }
     }

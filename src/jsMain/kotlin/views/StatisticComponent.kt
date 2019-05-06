@@ -7,6 +7,9 @@ import network.CommentClient
 import react.*
 import react.dom.button
 import react.dom.div
+import styled.css
+import styled.styledDiv
+import styles.CommonStyles
 import utils.ApplicationPage
 import kotlin.browser.window
 
@@ -29,36 +32,68 @@ class StatisticComponent : RComponent<StatisticProps, StatisticState>() {
         get() = props.coroutineScope.coroutineContext
 
     override fun RBuilder.render() {
-        div {
-            +"hello from STATISTIC"
-        }
-        button {
-            +"Back to main menu"
-            attrs.onClickFunction = {
-                props.updatePage(ApplicationPage.MAIN)
+        styledDiv {
+            css {
+                +CommonStyles.common
             }
-        }
-        button {
-            +"Call Spring!"
-            attrs.onClickFunction = {
-                val commentClient = CommentClient(coroutineContext)
-                props.coroutineScope.launch {
-                    val greetingResponse = commentClient.getGreeting()
-                    window.alert(greetingResponse)
-                    if (greetingResponse != "") {
-                        setState {
-                            greetingMessage = greetingResponse
-                            gotResponse = true
+            styledDiv {
+                +"hello from STATISTIC"
+                css {
+                    +CommonStyles.box
+                }
+                div {
+                    +"Text1"
+                }
+                div {
+                    +"Text2"
+                }
+            }
+            styledDiv {
+                +"hello from STATISTIC"
+                css {
+                    +CommonStyles.box
+                }
+                button {
+                    +"Back to main menu"
+                    attrs.onClickFunction = {
+                        props.updatePage(ApplicationPage.MAIN)
+                    }
+                }
+                button {
+                    +"Call Spring!"
+                    attrs.onClickFunction = {
+                        val commentClient = CommentClient(coroutineContext)
+                        props.coroutineScope.launch {
+                            val greetingResponse = commentClient.getGreeting()
+                            window.alert(greetingResponse)
+                            if (greetingResponse != "") {
+                                setState {
+                                    greetingMessage = greetingResponse
+                                    gotResponse = true
+                                }
+                            }
                         }
                     }
                 }
+                div {
+                    if (state.gotResponse) {
+                        +state.greetingMessage
+                    } else {
+                        +"Spring has not yet been called"
+                    }
+                }
             }
-        }
-        div {
-            if (state.gotResponse) {
-                +state.greetingMessage
-            } else {
-                +"Spring has not yet been called"
+            styledDiv {
+                +"hello from STATISTIC"
+                css {
+                    +CommonStyles.box
+                }
+                div {
+                    +"Text1"
+                }
+                div {
+                    +"Text2"
+                }
             }
         }
     }

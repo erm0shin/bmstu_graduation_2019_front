@@ -2,10 +2,16 @@ package views
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.html.js.onClickFunction
-import react.*
-import react.dom.button
-import react.dom.div
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import styled.css
+import styled.styledButton
+import styled.styledDiv
+import styles.CommonStyles
 import utils.ApplicationPage
+
 
 interface MainMenuProps : RProps {
     var coroutineScope: CoroutineScope
@@ -23,20 +29,36 @@ class MainMenuComponent : RComponent<MainMenuProps, MainMenuState>() {
         get() = props.coroutineScope.coroutineContext
 
     override fun RBuilder.render() {
-        div {
-            +"hello from MENU"
-        }
-        button {
-            +"Statistic"
-            attrs.onClickFunction = {
-                props.updatePage(ApplicationPage.STATISTIC)
+        styledDiv {
+            css {
+                +CommonStyles.common
             }
-        }
-        button {
-            +"Analytic"
-            attrs.onClickFunction = {
-                props.updatePage(ApplicationPage.ANALYTIC)
+
+            styledDiv {
+                +"hello from MENU"
+                css {
+                    +CommonStyles.box
+                }
+                styledButton {
+                    +"Statistic"
+                    attrs.onClickFunction = {
+                        props.updatePage(ApplicationPage.STATISTIC)
+                    }
+                    css {
+                        +CommonStyles.lightBtn
+                    }
+                }
+                styledButton {
+                    +"Analytic"
+                    attrs.onClickFunction = {
+                        props.updatePage(ApplicationPage.ANALYTIC)
+                    }
+                    css {
+                        +CommonStyles.redBtn
+                    }
+                }
             }
+
         }
     }
 }
