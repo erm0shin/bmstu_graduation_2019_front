@@ -1,10 +1,8 @@
 package views
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.html.js.onClickFunction
 import react.*
-import react.dom.button
-import react.dom.div
+import utils.ApplicationPage
 
 //private object ApplicationStyles : StyleSheet("ApplicationStyles", isStatic = true) {
 //    val wrapper by css {
@@ -15,12 +13,6 @@ import react.dom.div
 //        marginBottom = 32.px
 //    }
 //}
-
-enum class ApplicationPage {
-    MAIN,
-    STATISTIC,
-    ANALYTIC
-}
 
 interface ApplicationProps : RProps {
     var coroutineScope: CoroutineScope
@@ -41,54 +33,31 @@ class ApplicationComponent : RComponent<ApplicationProps, ApplicationState>() {
     override fun RBuilder.render() {
         when(state.applicationPage) {
             ApplicationPage.MAIN -> {
-                div {
-                    +"hello from MENU"
-                }
-                button {
-                    +"Statistic"
-                    attrs.onClickFunction = {
-                        setState {
-                            applicationPage = ApplicationPage.STATISTIC
-                        }
-                    }
-                }
-                button {
-                    +"Analytic"
-                    attrs.onClickFunction = {
-                        setState {
-                            applicationPage = ApplicationPage.ANALYTIC
-                        }
-                    }
+                child(MainMenuComponent::class) {
+                    attrs.coroutineScope = props.coroutineScope
+                    attrs.updatePage = this@ApplicationComponent::updatePage
                 }
             }
             ApplicationPage.STATISTIC -> {
-                div {
-                    +"hello from STATISTIC"
-                }
-                button {
-                    +"Back to main menu"
-                    attrs.onClickFunction = {
-                        setState {
-                            applicationPage = ApplicationPage.MAIN
-                        }
-                    }
+                child(StatisticComponent::class) {
+                    attrs.coroutineScope = props.coroutineScope
+                    attrs.updatePage = this@ApplicationComponent::updatePage
                 }
             }
             ApplicationPage.ANALYTIC -> {
-                div {
-                    +"hello from ANALYTIC"
-                }
-                button {
-                    +"Back to main menu"
-                    attrs.onClickFunction = {
-                        setState {
-                            applicationPage = ApplicationPage.MAIN
-                        }
-                    }
+                child(AnalyticComponent::class) {
+                    attrs.coroutineScope = props.coroutineScope
+                    attrs.updatePage = this@ApplicationComponent::updatePage
                 }
             }
         }
 
+    }
+
+    private fun updatePage(page: ApplicationPage) {
+        setState {
+            applicationPage = page
+        }
     }
 
 }
