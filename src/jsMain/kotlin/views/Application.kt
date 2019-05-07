@@ -41,6 +41,18 @@ class ApplicationComponent : RComponent<ApplicationProps, ApplicationState>() {
                     attrs.updatePage = this@ApplicationComponent::updatePage
                 }
             }
+            ApplicationPage.SIGN_IN -> {
+                child(SignInComponent::class) {
+                    attrs.coroutineScope = props.coroutineScope
+                    attrs.updatePage = this@ApplicationComponent::updatePage
+                }
+            }
+            ApplicationPage.SIGN_UP -> {
+                child(SignUpComponent::class) {
+                    attrs.coroutineScope = props.coroutineScope
+                    attrs.updatePage = this@ApplicationComponent::updatePage
+                }
+            }
         }
 
     }

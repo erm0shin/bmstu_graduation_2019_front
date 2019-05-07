@@ -60,4 +60,10 @@ object CommonStyles : StyleSheet("CommonStyles", isStatic = true) {
             borderColor = Color("#1d6f85")
         }
     }
+
+    val loginBar by css {
+        display = Display.flex
+        flexDirection = FlexDirection.row
+        justifyContent = JustifyContent.flexEnd
+    }
 }
