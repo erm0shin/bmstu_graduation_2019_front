@@ -5,14 +5,17 @@ import kotlinx.html.js.onClickFunction
 import react.*
 import react.dom.button
 import react.dom.div
+import react.dom.input
+import react.dom.p
 import styled.css
+import styled.styledButton
 import styled.styledDiv
 import styles.CommonStyles
 import utils.ApplicationPage
 
 interface AnalyticProps : RProps {
     var coroutineScope: CoroutineScope
-    var updatePage: (ApplicationPage)->Unit
+    var updatePage: (ApplicationPage) -> Unit
 }
 
 class AnalyticState : RState
@@ -31,33 +34,25 @@ class AnalyticComponent : RComponent<AnalyticProps, AnalyticState>() {
                 +CommonStyles.common
             }
             styledDiv {
-                +"hello from ANALYTIC"
                 css {
                     +CommonStyles.box
                 }
-                div {
-                    +"Text3"
+                p {
+                    +"Укажите первый параметр"
                 }
-                div {
-                    +"Text4"
+                input {
+                    attrs.placeholder = "Первый параметр"
                 }
             }
             styledDiv {
-                +"hello from ANALYTIC"
                 css {
                     +CommonStyles.box
                 }
-                div {
-                    +"Text3"
+                p {
+                    +"Укажите второй параметр"
                 }
-                div {
-                    +"Text4"
-                }
-            }
-            button {
-                +"Back to main menu"
-                attrs.onClickFunction = {
-                    props.updatePage(ApplicationPage.MAIN)
+                input {
+                    attrs.placeholder = "Второй параметр"
                 }
             }
         }

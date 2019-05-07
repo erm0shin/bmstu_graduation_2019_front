@@ -64,6 +64,7 @@ object CommonStyles : StyleSheet("CommonStyles", isStatic = true) {
     val loginBar by css {
         display = Display.flex
         flexDirection = FlexDirection.row
-        justifyContent = JustifyContent.flexEnd
+//        justifyContent = JustifyContent.flexEnd
+        justifyContent = JustifyContent.spaceBetween
     }
 }

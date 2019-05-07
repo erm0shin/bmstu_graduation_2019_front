@@ -35,7 +35,7 @@ class SignUpComponent : RComponent<SignUpProps, SignUpState>() {
             }
 
             styledDiv {
-                +"hello from MENU"
+                +"hello from SignUp"
                 css {
                     +CommonStyles.box
                 }

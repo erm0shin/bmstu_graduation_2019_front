@@ -22,6 +22,11 @@ class ApplicationComponent : RComponent<ApplicationProps, ApplicationState>() {
         get() = props.coroutineScope.coroutineContext
 
     override fun RBuilder.render() {
+        child(ButtonBarComponent::class) {
+            attrs.coroutineScope = props.coroutineScope
+            attrs.updatePage = this@ApplicationComponent::updatePage
+            attrs.applicationPage = state.applicationPage
+        }
         when(state.applicationPage) {
             ApplicationPage.MAIN -> {
                 child(MainMenuComponent::class) {
