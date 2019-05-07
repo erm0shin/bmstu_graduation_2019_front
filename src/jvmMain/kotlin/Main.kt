@@ -6,11 +6,14 @@ import io.ktor.html.respondHtml
 import io.ktor.http.content.files
 import io.ktor.http.content.static
 import io.ktor.jackson.jackson
+import io.ktor.response.respond
 import io.ktor.routing.get
 import io.ktor.routing.routing
 import kotlinx.css.*
 import kotlinx.css.properties.lh
 import kotlinx.html.*
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 
 private val globalCss = CSSBuilder().apply {
     body {
@@ -83,9 +86,20 @@ fun Application.main() {
             files("build/bundle")
         }
 
+        get("/hello") {
+            val serializedResult = Json.stringify(Greeting.serializer(), Greeting(11L, "hello from ktor"))
+            call.respond(serializedResult)
+        }
+
 //        route("/api") {
 //            rpc(PostService::class, Post.serializer())
 //            rpc(PostWithCommentsService::class, PostWithComments.serializer())
 //        }
     }
 }
+
+@Serializable
+data class Greeting(
+    val id: Long,
+    val content: String
+)

@@ -1,17 +1,21 @@
 package views
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import kotlinx.css.JustifyContent
+import kotlinx.html.DIV
 import kotlinx.html.js.onClickFunction
-import react.RBuilder
-import react.RComponent
-import react.RProps
-import react.RState
+import network.CommentClient
+import react.*
+import react.dom.button
+import rpc.Transport
+import styled.StyledDOMBuilder
 import styled.css
 import styled.styledButton
 import styled.styledDiv
 import styles.CommonStyles
 import utils.ApplicationPage
+import kotlin.browser.window
 
 interface ButtonBarProps : RProps {
     var coroutineScope: CoroutineScope
@@ -68,6 +72,26 @@ class ButtonBarComponent : RComponent<ButtonBarProps, ButtonBarState>() {
                     css {
                         +CommonStyles.redBtn
                     }
+                }
+//                callKtor()
+            }
+        }
+    }
+
+
+
+
+
+
+
+    private fun StyledDOMBuilder<DIV>.callKtor() {
+        button {
+            +"Call Ktor!"
+            attrs.onClickFunction = {
+                val transport = Transport(coroutineContext)
+                props.coroutineScope.launch {
+                    val hello = transport.getHello("hello", CommentClient.Greeting.serializer())
+                    window.alert(hello.content)
                 }
             }
         }

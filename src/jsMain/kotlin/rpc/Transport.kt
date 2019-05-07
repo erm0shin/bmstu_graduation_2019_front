@@ -5,6 +5,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.list
+import network.CommentClient
 import org.w3c.fetch.RequestCredentials
 import org.w3c.fetch.RequestInit
 import kotlin.browser.window
@@ -34,8 +35,17 @@ class Transport(private val coroutineContext: CoroutineContext) {
         return Json.parse(deserializationStrategy.list, fetch(url, *args))
     }
 
-    public suspend fun fetch(method: String, vararg args: Pair<String, Any>): String {
-        var url = "/api/$method"
+    suspend fun getHello(
+        url: String,
+        deserializationStrategy: KSerializer<CommentClient.Greeting>,
+        vararg args: Pair<String, Any>
+    ): CommentClient.Greeting {
+        return Json.parse(deserializationStrategy, fetch(url, *args))
+    }
+
+    private suspend fun fetch(method: String, vararg args: Pair<String, Any>): String {
+//        var url = "/api/$method"
+        var url = "/$method"
         if (args.isNotEmpty()) {
             url += "?"
             url += args.joinToString("&", transform = { "${it.first}=${urlEncode(it.second.toString())}" })
