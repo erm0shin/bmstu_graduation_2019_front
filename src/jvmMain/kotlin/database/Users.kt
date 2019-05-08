@@ -15,10 +15,3 @@ data class User(
     val password: String,
     val email: String
 )
-
-data class NewUser(
-    val id: Long?,
-    val login: String,
-    val password: String,
-    val email: String
-)
