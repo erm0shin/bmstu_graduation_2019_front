@@ -2,10 +2,10 @@ package views
 
 import dto.ClientUser
 import dto.NewUser
-import dto.User
 import kotlinx.coroutines.CoroutineScope
 import react.*
 import utils.ApplicationPage
+import kotlin.browser.window
 
 
 interface ApplicationProps : RProps {
@@ -26,13 +26,15 @@ class ApplicationComponent : RComponent<ApplicationProps, ApplicationState>() {
         get() = props.coroutineScope.coroutineContext
 
     override fun RBuilder.render() {
+        checkAuthorization()
+
         child(ButtonBarComponent::class) {
             attrs.coroutineScope = props.coroutineScope
             attrs.updatePage = this@ApplicationComponent::updatePage
             attrs.applicationPage = state.applicationPage
             attrs.updateCurrentUser = this@ApplicationComponent::updateCurrentUser
         }
-        when(state.applicationPage) {
+        when (state.applicationPage) {
             ApplicationPage.MAIN -> {
                 child(MainMenuComponent::class) {
                     attrs.coroutineScope = props.coroutineScope
@@ -67,6 +69,19 @@ class ApplicationComponent : RComponent<ApplicationProps, ApplicationState>() {
             }
         }
 
+    }
+
+    private fun checkAuthorization() {
+        if (state.currentUser == null &&
+            !(state.applicationPage == ApplicationPage.MAIN ||
+                    state.applicationPage == ApplicationPage.SIGN_UP ||
+                    state.applicationPage == ApplicationPage.SIGN_IN)
+        ) {
+            window.alert("Зарегайся!")
+            setState {
+                applicationPage = ApplicationPage.MAIN
+            }
+        }
     }
 
     private fun updatePage(page: ApplicationPage) {
