@@ -99,6 +99,8 @@ kotlin {
                 implementation "org.jetbrains:kotlin-css-jvm:1.0.0-pre.69-kotlin-$kotlin_version"
                 implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.10.0"
                 implementation "org.jetbrains.exposed:exposed:0.13.2"
+                implementation group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
+                implementation group: 'com.zaxxer', name: 'HikariCP', version: '2.7.4'
             }
         }
         jvmTest {
