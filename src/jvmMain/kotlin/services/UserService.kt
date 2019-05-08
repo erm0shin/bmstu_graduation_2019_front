@@ -22,7 +22,8 @@ class UserService(private val userRepository: UserRepository) {
         newUser: NewUser
     ): Long? {
         return try {
-            (userRepository.getUser(newUser.login)?.id ?: userRepository.getUser(newUser.email)?.id)
+            (userRepository.getUser(newUser.login, newUser.password)?.id ?:
+                 userRepository.getUser(newUser.email, newUser.password)?.id)
         } catch (e: Exception) {
             null
         }

@@ -1,5 +1,8 @@
 package views
 
+import dto.ClientUser
+import dto.NewUser
+import dto.User
 import kotlinx.coroutines.CoroutineScope
 import react.*
 import utils.ApplicationPage
@@ -11,6 +14,7 @@ interface ApplicationProps : RProps {
 
 class ApplicationState : RState {
     var applicationPage: ApplicationPage = ApplicationPage.MAIN
+    var currentUser: ClientUser? = null
 }
 
 class ApplicationComponent : RComponent<ApplicationProps, ApplicationState>() {
@@ -26,6 +30,7 @@ class ApplicationComponent : RComponent<ApplicationProps, ApplicationState>() {
             attrs.coroutineScope = props.coroutineScope
             attrs.updatePage = this@ApplicationComponent::updatePage
             attrs.applicationPage = state.applicationPage
+            attrs.updateCurrentUser = this@ApplicationComponent::updateCurrentUser
         }
         when(state.applicationPage) {
             ApplicationPage.MAIN -> {
@@ -50,12 +55,14 @@ class ApplicationComponent : RComponent<ApplicationProps, ApplicationState>() {
                 child(SignInComponent::class) {
                     attrs.coroutineScope = props.coroutineScope
                     attrs.updatePage = this@ApplicationComponent::updatePage
+                    attrs.updateCurrentUser = this@ApplicationComponent::updateCurrentUser
                 }
             }
             ApplicationPage.SIGN_UP -> {
                 child(SignUpComponent::class) {
                     attrs.coroutineScope = props.coroutineScope
                     attrs.updatePage = this@ApplicationComponent::updatePage
+                    attrs.updateCurrentUser = this@ApplicationComponent::updateCurrentUser
                 }
             }
         }
@@ -65,6 +72,19 @@ class ApplicationComponent : RComponent<ApplicationProps, ApplicationState>() {
     private fun updatePage(page: ApplicationPage) {
         setState {
             applicationPage = page
+        }
+    }
+
+    private fun updateCurrentUser(newUser: NewUser?) {
+        setState {
+            if (newUser == null) {
+                currentUser = null
+            } else {
+                currentUser = ClientUser(
+                    login = newUser.login,
+                    email = newUser.email
+                )
+            }
         }
     }
 

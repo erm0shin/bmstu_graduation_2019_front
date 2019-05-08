@@ -1,9 +1,9 @@
 package repositories
 
 import database.DatabaseFactory.dbQuery
-import database.User
 import database.Users
 import dto.NewUser
+import dto.User
 import org.jetbrains.exposed.sql.*
 
 class UserRepository {
@@ -19,9 +19,10 @@ class UserRepository {
             .singleOrNull()
     }
 
-    suspend fun getUser(loginOrEmail: String): User? = dbQuery {
+    suspend fun getUser(loginOrEmail: String, password: String): User? = dbQuery {
         Users.select {
-            ((Users.email eq loginOrEmail) or (Users.login eq loginOrEmail))
+            (((Users.email eq loginOrEmail) or (Users.login eq loginOrEmail))
+                    and (Users.password eq password))
         }.mapNotNull { toUser(it) }
             .singleOrNull()
     }

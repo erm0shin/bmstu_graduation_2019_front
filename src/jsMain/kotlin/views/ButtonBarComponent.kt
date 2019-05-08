@@ -1,5 +1,6 @@
 package views
 
+import dto.NewUser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.css.JustifyContent
@@ -21,6 +22,7 @@ interface ButtonBarProps : RProps {
     var coroutineScope: CoroutineScope
     var updatePage: (ApplicationPage)->Unit
     var applicationPage: ApplicationPage
+    var updateCurrentUser: (NewUser?) -> Unit
 }
 
 class ButtonBarState : RState
@@ -68,6 +70,22 @@ class ButtonBarComponent : RComponent<ButtonBarProps, ButtonBarState>() {
                     +"SignUp"
                     attrs.onClickFunction = {
                         props.updatePage(ApplicationPage.SIGN_UP)
+                    }
+                    css {
+                        +CommonStyles.redBtn
+                    }
+                }
+                styledButton {
+                    +"SignOut"
+                    attrs.onClickFunction = {
+                        val transport = Transport(coroutineContext)
+                        props.coroutineScope.launch {
+                            if (transport.signout()) {
+                                window.alert("Ура")
+                                props.updateCurrentUser(null)
+                                props.updatePage(ApplicationPage.MAIN)
+                            }
+                        }
                     }
                     css {
                         +CommonStyles.redBtn

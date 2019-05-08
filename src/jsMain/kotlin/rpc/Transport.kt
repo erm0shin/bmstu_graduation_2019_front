@@ -1,5 +1,6 @@
 package rpc
 
+import dto.NewUser
 import kotlinx.coroutines.await
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.KSerializer
@@ -43,6 +44,40 @@ class Transport(private val coroutineContext: CoroutineContext) {
         return Json.parse(deserializationStrategy, fetch(url, *args))
     }
 
+    suspend fun sign(
+        url: String,
+        newUser: NewUser
+    ): Boolean {
+        return withContext(coroutineContext) {
+            val response = window.fetch(
+                "/$url", RequestInit(
+                    "POST",
+                    headers = json(
+                        "Accept" to "application/json",
+                        "Content-Type" to "application/json"
+                    ),
+                    credentials = "same-origin".asDynamic(),
+                    body = Json.stringify(NewUser.serializer(), newUser)
+                )
+            ).await()
+
+            response.status == 200.toShort()
+        }
+    }
+
+    suspend fun signout(): Boolean {
+        return withContext(coroutineContext) {
+            val response = window.fetch(
+                "/signout", RequestInit(
+                    "DELETE",
+                    credentials = "same-origin".asDynamic()
+                )
+            ).await()
+
+            response.status == 200.toShort()
+        }
+    }
+
     private suspend fun fetch(method: String, vararg args: Pair<String, Any>): String {
 //        var url = "/api/$method"
         var url = "/$method"
@@ -52,10 +87,14 @@ class Transport(private val coroutineContext: CoroutineContext) {
         }
 
         return withContext(coroutineContext) {
-            val response = window.fetch(url, RequestInit("GET", headers = json(
-                "Accept" to "application/json",
-                "Content-Type" to "application/json"
-            ), credentials = "same-origin".asDynamic())).await()
+            val response = window.fetch(
+                url, RequestInit(
+                    "GET", headers = json(
+                        "Accept" to "application/json",
+                        "Content-Type" to "application/json"
+                    ), credentials = "same-origin".asDynamic()
+                )
+            ).await()
 
             response.text().await()
         }

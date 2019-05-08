@@ -7,6 +7,7 @@ import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.features.ContentNegotiation
 import io.ktor.html.respondHtml
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.files
 import io.ktor.http.content.static
 import io.ktor.jackson.jackson
@@ -82,6 +83,9 @@ fun Application.main() {
             if (newUserId != null) {
                 val session = call.sessions.get<UserSession>() ?: UserSession(name = newUser.login, value = 0)
                 call.sessions.set(session.copy(value = newUserId))
+                call.response.status(HttpStatusCode.OK)
+            } else {
+                call.response.status(HttpStatusCode.BadRequest)
             }
         }
 
@@ -91,15 +95,20 @@ fun Application.main() {
             if (userId != null) {
                 val session = call.sessions.get<UserSession>() ?: UserSession(name = newUser.login, value = 0)
                 call.sessions.set(session.copy(value = userId))
+                call.response.status(HttpStatusCode.OK)
+            } else {
+                call.response.status(HttpStatusCode.BadRequest)
             }
         }
 
         delete("/signout") {
             call.sessions.clear<UserSession>()
+            call.response.status(HttpStatusCode.OK)
         }
 
         get("/hello") {
             val serializedResult = Json.stringify(Greeting.serializer(), Greeting(11L, "hello from ktor"))
+//            call.response.status(HttpStatusCode.OK)
             call.respond(serializedResult)
         }
 
