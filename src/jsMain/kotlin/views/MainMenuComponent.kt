@@ -11,7 +11,9 @@ import react.dom.div
 import styled.css
 import styled.styledButton
 import styled.styledDiv
+import styled.styledP
 import styles.CommonStyles
+import styles.TableStyles
 import utils.ApplicationPage
 
 
@@ -37,26 +39,35 @@ class MainMenuComponent : RComponent<MainMenuProps, MainMenuState>() {
             }
 
             styledDiv {
-                +"hello from MENU"
+                +"Главное меню"
                 css {
                     +CommonStyles.box
                 }
                 styledButton {
-                    +"Statistic"
+                    +"Авторизация"
                     attrs.onClickFunction = {
-                        props.updatePage(ApplicationPage.STATISTIC)
+                        props.updatePage(ApplicationPage.SIGN_IN)
                     }
                     css {
                         +CommonStyles.lightBtn
                     }
                 }
                 styledButton {
-                    +"Analytic"
+                    +"Регистрация"
                     attrs.onClickFunction = {
-                        props.updatePage(ApplicationPage.ANALYTIC)
+                        props.updatePage(ApplicationPage.SIGN_UP)
                     }
                     css {
                         +CommonStyles.redBtn
+                    }
+                }
+                styledButton {
+                    +"Аналитика"
+                    attrs.onClickFunction = {
+                        props.updatePage(ApplicationPage.STATISTIC)
+                    }
+                    css {
+                        +CommonStyles.lightBtn
                     }
                 }
             }

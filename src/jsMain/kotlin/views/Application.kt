@@ -26,7 +26,7 @@ class ApplicationComponent : RComponent<ApplicationProps, ApplicationState>() {
         get() = props.coroutineScope.coroutineContext
 
     override fun RBuilder.render() {
-        checkAuthorization()
+//        checkAuthorization()
 
         child(ButtonBarComponent::class) {
             attrs.coroutineScope = props.coroutineScope

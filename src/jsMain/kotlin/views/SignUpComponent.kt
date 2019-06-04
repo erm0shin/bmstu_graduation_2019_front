@@ -3,6 +3,7 @@ package views
 import dto.NewUser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.html.InputType
 import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onClickFunction
 import org.w3c.dom.HTMLInputElement
@@ -44,13 +45,13 @@ class SignUpComponent : RComponent<SignUpProps, SignUpState>() {
             }
 
             styledDiv {
-                +"hello from SignUp"
+                +"Регистрация"
                 css {
                     +CommonStyles.box
                 }
                 // TODO: добавить стили
                 input {
-                    attrs.placeholder = "Login"
+                    attrs.placeholder = "Логин"
                     attrs.onChangeFunction = {
                         val target = it.target as HTMLInputElement
                         setState {
@@ -59,7 +60,7 @@ class SignUpComponent : RComponent<SignUpProps, SignUpState>() {
                     }
                 }
                 input {
-                    attrs.placeholder = "Email"
+                    attrs.placeholder = "Почта"
                     attrs.onChangeFunction = {
                         val target = it.target as HTMLInputElement
                         setState {
@@ -67,9 +68,9 @@ class SignUpComponent : RComponent<SignUpProps, SignUpState>() {
                         }
                     }
                 }
-                // TODO: замазывать пароль
                 input {
-                    attrs.placeholder = "Password"
+                    attrs.placeholder = "Пароль"
+                    attrs.type = InputType.password
                     attrs.onChangeFunction = {
                         val target = it.target as HTMLInputElement
                         setState {
@@ -78,7 +79,8 @@ class SignUpComponent : RComponent<SignUpProps, SignUpState>() {
                     }
                 }
                 input {
-                    attrs.placeholder = "Repeat password"
+                    attrs.placeholder = "Повторите пароль"
+                    attrs.type = InputType.password
                     attrs.onChangeFunction = {
                         val target = it.target as HTMLInputElement
                         setState {
@@ -87,7 +89,7 @@ class SignUpComponent : RComponent<SignUpProps, SignUpState>() {
                     }
                 }
                 styledButton {
-                    +"Submit"
+                    +"Подтвердить"
                     attrs.onClickFunction = {
                         val transport = Transport(coroutineContext)
                         props.coroutineScope.launch {

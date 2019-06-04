@@ -3,6 +3,7 @@ package views
 import dto.NewUser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.html.InputType
 import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onClickFunction
 import org.w3c.dom.HTMLInputElement
@@ -42,13 +43,13 @@ class SignInComponent : RComponent<SignInProps, SignInState>() {
             }
 
             styledDiv {
-                +"hello from SignIn"
+                +"Авторизация"
                 css {
                     +CommonStyles.box
                 }
                 // TODO: добавить стили
                 input {
-                    attrs.placeholder = "Login or Email"
+                    attrs.placeholder = "Логин или почта"
                     attrs.onChangeFunction = {
                         val target = it.target as HTMLInputElement
                         setState {
@@ -58,7 +59,8 @@ class SignInComponent : RComponent<SignInProps, SignInState>() {
                 }
                 // TODO: замазывать пароль
                 input {
-                    attrs.placeholder = "Password"
+                    attrs.type = InputType.password
+                    attrs.placeholder = "Пароль"
                     attrs.onChangeFunction = {
                         val target = it.target as HTMLInputElement
                         setState {
@@ -67,7 +69,7 @@ class SignInComponent : RComponent<SignInProps, SignInState>() {
                     }
                 }
                 styledButton {
-                    +"Submit"
+                    +"Подтвердить"
                     attrs.onClickFunction = {
                         val transport = Transport(coroutineContext)
                         props.coroutineScope.launch {

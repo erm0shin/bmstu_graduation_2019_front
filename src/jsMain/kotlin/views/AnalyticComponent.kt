@@ -1,6 +1,7 @@
 package views
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.html.InputType
 import kotlinx.html.js.onClickFunction
 import react.*
 import react.dom.button
@@ -34,14 +35,33 @@ class AnalyticComponent : RComponent<AnalyticProps, AnalyticState>() {
                 +CommonStyles.common
             }
             styledDiv {
+                +"Укажите локацию"
                 css {
                     +CommonStyles.box
                 }
                 p {
-                    +"Укажите первый параметр"
+                    +"Выберите курс"
                 }
                 input {
-                    attrs.placeholder = "Первый параметр"
+                    attrs.placeholder = "Курс"
+                }
+                p {
+                    +"Выберите факультет"
+                }
+                input {
+                    attrs.placeholder = "Факультет"
+                }
+                p {
+                    +"Выберите группу"
+                }
+                input {
+                    attrs.placeholder = "Группа"
+                }
+                p {
+                    +"Выберите студента"
+                }
+                input {
+                    attrs.placeholder = "Студент"
                 }
             }
             styledDiv {
@@ -49,10 +69,31 @@ class AnalyticComponent : RComponent<AnalyticProps, AnalyticState>() {
                     +CommonStyles.box
                 }
                 p {
-                    +"Укажите второй параметр"
+                    +"Выберите предмет"
                 }
                 input {
-                    attrs.placeholder = "Второй параметр"
+                    attrs.placeholder = "Предмет"
+                }
+            }
+            styledDiv {
+                css {
+                    +CommonStyles.box
+                }
+                p {
+                    +"Укажите желаемый показатель"
+                }
+//                input {
+//                    attrs.type = InputType.radio
+//                    attrs.value = "Успеваемость"
+//                    attrs.name = "CheckAnal"
+//                }
+//                input {
+//                    attrs.type = InputType.radio
+//                    attrs.value = "Посещаемость"
+//                    attrs.name = "CheckAnal"
+//                }
+                input {
+                    attrs.placeholder = "Показатель"
                 }
             }
         }

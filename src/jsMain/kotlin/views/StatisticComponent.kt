@@ -3,18 +3,14 @@ package views
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.html.DIV
+import kotlinx.html.InputType
 import kotlinx.html.js.onClickFunction
 import network.CommentClient
 import react.*
-import react.dom.button
-import react.dom.div
-import react.dom.input
-import react.dom.p
-import styled.StyledDOMBuilder
-import styled.css
-import styled.styledButton
-import styled.styledDiv
+import react.dom.*
+import styled.*
 import styles.CommonStyles
+import styles.TableStyles
 import utils.ApplicationPage
 import kotlin.browser.window
 
@@ -39,69 +35,104 @@ class StatisticComponent : RComponent<StatisticProps, StatisticState>() {
     override fun RBuilder.render() {
         styledDiv {
             css {
-                +CommonStyles.common
+                +TableStyles.center
+            }
+            styledP {
+                css {
+                    +TableStyles.bigHeader
+                }
+                +"Аналитика"
             }
             styledDiv {
-                +"Укажите локацию"
                 css {
-                    +CommonStyles.box
+                    +TableStyles.table
                 }
-                p {
-                    +"Выберите курс"
+                styledDiv {
+                    css {
+                        +TableStyles.tableRow
+                    }
                 }
-                input {
-                    attrs.placeholder = "Курс"
-                }
-                p {
-                    +"Выберите факультет"
-                }
-                input {
-                    attrs.placeholder = "Факультет"
-                }
-                p {
-                    +"Выберите группу"
-                }
-                input {
-                    attrs.placeholder = "Группа"
-                }
-                p {
-                    +"Выберите студента"
-                }
-                input {
-                    attrs.placeholder = "Студент"
-                }
-            }
-            styledDiv {
-                +"Укажите предмет"
-                css {
-                    +CommonStyles.box
-                }
-                p {
-                    +"Выберите предмет"
-                }
-                input {
-                    attrs.placeholder = "Предмет"
+                styledDiv {
+                    css {
+                        +TableStyles.tableRow
+                    }
+                    styledDiv {
+                        css {
+                            +TableStyles.tableCell
+                        }
+                        styledP {
+                            css {
+                                +TableStyles.header
+                            }
+                            +"Выберите группу"
+                        }
+                        input {
+                            attrs.placeholder = "Группа"
+                        }
+                    }
+                    styledDiv {
+                        css {
+                            +TableStyles.tableCell
+                        }
+                        styledP {
+                            css {
+                                +TableStyles.header
+                            }
+                            +"Выберите предмет"
+                        }
+                        input {
+                            attrs.placeholder = "Предмет"
+                        }
+                    }
+                    styledDiv {
+                        css {
+                            +TableStyles.tableCell
+                        }
+                        styledP {
+                            css {
+                                +TableStyles.header
+                            }
+                            +"Укажите показатель"
+                        }
+                        select {
+                            option {
+                                +"Успеваемость"
+                            }
+                            option {
+                                +"Посещаемость"
+                            }
+                        }
+                    }
+                    styledDiv {
+                        css {
+                            +TableStyles.tableCell
+                        }
+                        styledDiv {
+                            styledP {
+                                css {
+                                    +TableStyles.header
+                                }
+                                +"Укажите временной период"
+                            }
+                            p {
+                                +"Укажите начало"
+                            }
+                            input {
+                                attrs.type = InputType.date
+                                attrs.placeholder = "Начало"
+                            }
+                            p {
+                                +"Укажите окончание"
+                            }
+                            input {
+                                attrs.type = InputType.date
+                                attrs.placeholder = "Окончание"
+                            }
+                        }
+                    }
                 }
             }
 //            buildFetch()
-            styledDiv {
-                +"Укажите временной период"
-                css {
-                    +CommonStyles.box
-                }
-                p {
-                    +"Укажите начало"
-                }
-                input {
-                    attrs.placeholder = "Начало"
-                }
-                p {
-                    +"Укажите окончание"
-                }
-                input {
-                    attrs.placeholder = "Окончание"
-                }
-            }
         }
     }
 
