@@ -1,19 +1,15 @@
 package views
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.css.JustifyContent
 import kotlinx.html.js.onClickFunction
 import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
-import react.dom.div
 import styled.css
 import styled.styledButton
 import styled.styledDiv
-import styled.styledP
 import styles.CommonStyles
-import styles.TableStyles
 import utils.ApplicationPage
 
 
@@ -62,12 +58,30 @@ class MainMenuComponent : RComponent<MainMenuProps, MainMenuState>() {
                     }
                 }
                 styledButton {
-                    +"Аналитика"
+                    +"Успеваемость"
                     attrs.onClickFunction = {
-                        props.updatePage(ApplicationPage.STATISTIC)
+                        props.updatePage(ApplicationPage.PERFORMANCE)
                     }
                     css {
                         +CommonStyles.lightBtn
+                    }
+                }
+                styledButton {
+                    +"Посещаемость"
+                    attrs.onClickFunction = {
+                        props.updatePage(ApplicationPage.ATTENDANCE)
+                    }
+                    css {
+                        +CommonStyles.lightBtn
+                    }
+                }
+                styledButton {
+                    +"Выйти из системы"
+                    attrs.onClickFunction = {
+                        props.updatePage(ApplicationPage.SIGN_OUT)
+                    }
+                    css {
+                        +CommonStyles.redBtn
                     }
                 }
             }

@@ -9,7 +9,7 @@ import kotlinx.html.js.onClickFunction
 import org.w3c.dom.HTMLInputElement
 import react.*
 import react.dom.input
-import rpc.Transport
+import network.Transport
 import styled.css
 import styled.styledButton
 import styled.styledDiv
@@ -49,7 +49,6 @@ class SignUpComponent : RComponent<SignUpProps, SignUpState>() {
                 css {
                     +CommonStyles.box
                 }
-                // TODO: добавить стили
                 input {
                     attrs.placeholder = "Логин"
                     attrs.onChangeFunction = {

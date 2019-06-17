@@ -11,8 +11,9 @@ const val GREETING_URL = "http://127.0.0.1:7070/greeting"
 
 enum class ApplicationPage {
     MAIN,
-    STATISTIC,
-    ANALYTIC,
     SIGN_IN,
-    SIGN_UP
+    SIGN_UP,
+    SIGN_OUT,
+    PERFORMANCE,
+    ATTENDANCE
 }

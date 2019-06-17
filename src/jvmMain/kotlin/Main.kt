@@ -1,13 +1,21 @@
 import database.DatabaseFactory
 import database.Posts
 import database.toPost
+import dto.AttendanceRequest
 import dto.NewUser
+import dto.PerformanceRequest
+import dto.User
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.apache.Apache
+import io.ktor.client.features.json.JacksonSerializer
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.request.post
 import io.ktor.features.ContentNegotiation
 import io.ktor.html.respondHtml
-import io.ktor.http.HttpStatusCode
+import io.ktor.http.*
 import io.ktor.http.content.files
 import io.ktor.http.content.static
 import io.ktor.jackson.jackson
@@ -21,6 +29,7 @@ import io.ktor.sessions.*
 import kotlinx.html.*
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import org.h2.util.JdbcUtils.serializer
 import org.jetbrains.exposed.sql.selectAll
 import repositories.UserRepository
 import services.UserService
@@ -46,6 +55,14 @@ fun Application.main() {
     DatabaseFactory.init()
     val userRepository = UserRepository()
     val userService = UserService(userRepository)
+
+    val client = HttpClient(Apache) {
+        install(JsonFeature) {
+            serializer = JacksonSerializer()
+        }
+    }
+
+    val ANALYTIC_URL = ""
 
 //    database {
 //        SchemaUtils.create(Posts)
@@ -101,6 +118,34 @@ fun Application.main() {
             }
         }
 
+        post("/forwardPerformanceRequest") {
+            val session = call.sessions.get<UserSession>()
+            if (session == null || !userService.userExists(session.value)) {
+                call.response.status(HttpStatusCode.BadRequest)
+            } else {
+                val message = client.post<PerformanceRequest> {
+                    url(ANALYTIC_URL + "/performance")
+                    contentType(ContentType.Application.Json)
+                    body = call.receive<PerformanceRequest>()
+                }
+                call.respond(message)
+            }
+        }
+
+        post("/forwardAttendanceRequest") {
+            val session = call.sessions.get<UserSession>()
+            if (session == null || !userService.userExists(session.value)) {
+                call.response.status(HttpStatusCode.BadRequest)
+            } else {
+                val message = client.post<AttendanceRequest> {
+                    url(ANALYTIC_URL + "/attendance")
+                    contentType(ContentType.Application.Json)
+                    body = call.receive<AttendanceRequest>()
+                }
+                call.respond(message)
+            }
+        }
+
         delete("/signout") {
             call.sessions.clear<UserSession>()
             call.response.status(HttpStatusCode.OK)
@@ -108,7 +153,6 @@ fun Application.main() {
 
         get("/hello") {
             val serializedResult = Json.stringify(Greeting.serializer(), Greeting(11L, "hello from ktor"))
-//            call.response.status(HttpStatusCode.OK)
             call.respond(serializedResult)
         }
 

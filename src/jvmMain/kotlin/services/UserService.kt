@@ -28,4 +28,10 @@ class UserService(private val userRepository: UserRepository) {
             null
         }
     }
+
+    suspend fun userExists(
+        userId: Long
+    ): Boolean {
+        return userRepository.getUser(userId) != null
+    }
 }

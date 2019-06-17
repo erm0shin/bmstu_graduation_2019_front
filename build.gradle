@@ -101,6 +101,8 @@ kotlin {
                 implementation "org.jetbrains.exposed:exposed:0.13.2"
                 implementation group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
                 implementation group: 'com.zaxxer', name: 'HikariCP', version: '2.7.4'
+                implementation "io.ktor:ktor-client-json:$ktor_version"
+                implementation "io.ktor:ktor-client-jackson:$ktor_version"
             }
         }
         jvmTest {

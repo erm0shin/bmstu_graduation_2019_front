@@ -9,7 +9,7 @@ import kotlinx.html.js.onClickFunction
 import org.w3c.dom.HTMLInputElement
 import react.*
 import react.dom.input
-import rpc.Transport
+import network.Transport
 import styled.css
 import styled.styledButton
 import styled.styledDiv
@@ -47,7 +47,6 @@ class SignInComponent : RComponent<SignInProps, SignInState>() {
                 css {
                     +CommonStyles.box
                 }
-                // TODO: добавить стили
                 input {
                     attrs.placeholder = "Логин или почта"
                     attrs.onChangeFunction = {
@@ -57,7 +56,6 @@ class SignInComponent : RComponent<SignInProps, SignInState>() {
                         }
                     }
                 }
-                // TODO: замазывать пароль
                 input {
                     attrs.type = InputType.password
                     attrs.placeholder = "Пароль"
@@ -68,26 +66,40 @@ class SignInComponent : RComponent<SignInProps, SignInState>() {
                         }
                     }
                 }
-                styledButton {
-                    +"Подтвердить"
-                    attrs.onClickFunction = {
-                        val transport = Transport(coroutineContext)
-                        props.coroutineScope.launch {
-                            val newUser = NewUser(
-                                id = null,
-                                login = state.loginOrEmail,
-                                email = state.loginOrEmail,
-                                password = state.password
-                            )
-                            if (transport.sign("signin", newUser)) {
-                                window.alert("Ура")
-                                props.updateCurrentUser(newUser)
-                                props.updatePage(ApplicationPage.MAIN)
+                styledDiv {
+                    css {
+                        +CommonStyles.loginBar
+                    }
+                    styledButton {
+                        +"Подтвердить"
+                        attrs.onClickFunction = {
+                            val transport = Transport(coroutineContext)
+                            props.coroutineScope.launch {
+                                val newUser = NewUser(
+                                    id = null,
+                                    login = state.loginOrEmail,
+                                    email = state.loginOrEmail,
+                                    password = state.password
+                                )
+                                if (transport.sign("signin", newUser)) {
+                                    window.alert("Ура")
+                                    props.updateCurrentUser(newUser)
+                                    props.updatePage(ApplicationPage.MAIN)
+                                }
                             }
                         }
+                        css {
+                            +CommonStyles.lightBtn
+                        }
                     }
-                    css {
-                        +CommonStyles.lightBtn
+                    styledButton {
+                        +"Зарегистрироваться"
+                        attrs.onClickFunction = {
+                            props.updatePage(ApplicationPage.SIGN_UP)
+                        }
+                        css {
+                            +CommonStyles.redBtn
+                        }
                     }
                 }
             }

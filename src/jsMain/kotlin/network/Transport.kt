@@ -1,13 +1,12 @@
-package rpc
+package network
 
 import dto.NewUser
+import dto.PerformanceRequest
 import kotlinx.coroutines.await
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.list
-import network.CommentClient
-import org.w3c.fetch.RequestCredentials
 import org.w3c.fetch.RequestInit
 import kotlin.browser.window
 import kotlin.coroutines.CoroutineContext
@@ -98,5 +97,9 @@ class Transport(private val coroutineContext: CoroutineContext) {
 
             response.text().await()
         }
+    }
+
+    fun forwardPerformanceRequest(performanceRequest: PerformanceRequest, serializer: KSerializer<PerformanceRequest>): ByteArray {
+        return ByteArray(12);
     }
 }

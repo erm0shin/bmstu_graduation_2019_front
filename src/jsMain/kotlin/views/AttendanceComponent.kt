@@ -1,32 +1,31 @@
 package views
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-import kotlinx.html.DIV
 import kotlinx.html.InputType
 import kotlinx.html.js.onClickFunction
-import network.CommentClient
 import react.*
-import react.dom.*
-import styled.*
+import react.dom.input
+import react.dom.option
+import react.dom.p
+import react.dom.select
+import styled.css
+import styled.styledButton
+import styled.styledDiv
+import styled.styledP
 import styles.CommonStyles
 import styles.TableStyles
 import utils.ApplicationPage
-import kotlin.browser.window
 
-interface StatisticProps : RProps {
+interface AttendanceProps : RProps {
     var coroutineScope: CoroutineScope
     var updatePage: (ApplicationPage) -> Unit
 }
 
-class StatisticState : RState {
-    var greetingMessage = ""
-    var gotResponse = false
-}
+class AttendanceState : RState
 
-class StatisticComponent : RComponent<StatisticProps, StatisticState>() {
+class AttendanceComponent : RComponent<AttendanceProps, AttendanceState>() {
     init {
-        state = StatisticState()
+        state = AttendanceState()
     }
 
     private val coroutineContext
@@ -41,7 +40,7 @@ class StatisticComponent : RComponent<StatisticProps, StatisticState>() {
                 css {
                     +TableStyles.bigHeader
                 }
-                +"Аналитика"
+                +"Посещаемость"
             }
             styledDiv {
                 css {
@@ -51,23 +50,37 @@ class StatisticComponent : RComponent<StatisticProps, StatisticState>() {
                     css {
                         +TableStyles.tableRow
                     }
-                }
-                styledDiv {
-                    css {
-                        +TableStyles.tableRow
-                    }
                     styledDiv {
                         css {
                             +TableStyles.tableCell
                         }
-                        styledP {
-                            css {
-                                +TableStyles.header
+                        styledDiv {
+                            styledP {
+                                css {
+                                    +TableStyles.header
+                                }
+                                +"Укажите учебное подразделение"
                             }
-                            +"Выберите группу"
-                        }
-                        input {
-                            attrs.placeholder = "Группа"
+                            p {
+                                +"Выберите подразделение"
+                            }
+                            select {
+                                option {
+                                    +"Группа"
+                                }
+                                option {
+                                    +"Кафедра"
+                                }
+                                option {
+                                    +"Факультет"
+                                }
+                            }
+                            p {
+                                +"Укажите значение"
+                            }
+                            input {
+                                attrs.placeholder = "Подразделение"
+                            }
                         }
                     }
                     styledDiv {
@@ -82,25 +95,6 @@ class StatisticComponent : RComponent<StatisticProps, StatisticState>() {
                         }
                         input {
                             attrs.placeholder = "Предмет"
-                        }
-                    }
-                    styledDiv {
-                        css {
-                            +TableStyles.tableCell
-                        }
-                        styledP {
-                            css {
-                                +TableStyles.header
-                            }
-                            +"Укажите показатель"
-                        }
-                        select {
-                            option {
-                                +"Успеваемость"
-                            }
-                            option {
-                                +"Посещаемость"
-                            }
                         }
                     }
                     styledDiv {
@@ -132,44 +126,37 @@ class StatisticComponent : RComponent<StatisticProps, StatisticState>() {
                     }
                 }
             }
-//            buildFetch()
-        }
-    }
-
-
-    private fun StyledDOMBuilder<DIV>.buildFetch() {
-        styledDiv {
-            +"hello from STATISTIC"
-            css {
-                +CommonStyles.box
-            }
-            button {
-                +"Back to main menu"
-                attrs.onClickFunction = {
-                    props.updatePage(ApplicationPage.MAIN)
+            styledDiv {
+                css {
+                    +CommonStyles.loginBar
                 }
-            }
-            button {
-                +"Call Spring!"
-                attrs.onClickFunction = {
-                    val commentClient = CommentClient(coroutineContext)
-                    props.coroutineScope.launch {
-                        val greetingResponse = commentClient.getGreeting()
-                        window.alert(greetingResponse)
-                        if (greetingResponse != "") {
-                            setState {
-                                greetingMessage = greetingResponse
-                                gotResponse = true
-                            }
+                styledDiv {
+                    styledButton {
+                        +"Подтвердить"
+                        attrs.onClickFunction = {
+                        }
+                        css {
+                            +CommonStyles.lightBtn
+                        }
+                    }
+                    styledButton {
+                        +"Добавить измерение"
+                        attrs.onClickFunction = {
+                        }
+                        css {
+                            +CommonStyles.lightBtn
                         }
                     }
                 }
-            }
-            div {
-                if (state.gotResponse) {
-                    +state.greetingMessage
-                } else {
-                    +"Spring has not yet been called"
+                styledDiv {
+                    styledButton {
+                        +"Сброс"
+                        attrs.onClickFunction = {
+                        }
+                        css {
+                            +CommonStyles.redBtn
+                        }
+                    }
                 }
             }
         }
