@@ -9,7 +9,6 @@ class UserService(private val userRepository: UserRepository) {
         newUser: NewUser
     ): Long? {
         try {
-            // TODO: оптимизировать вызовы сервиса
             if (userRepository.userExists(newUser.login) or userRepository.userExists(newUser.email))
                 return null
             return userRepository.addUser(newUser).id

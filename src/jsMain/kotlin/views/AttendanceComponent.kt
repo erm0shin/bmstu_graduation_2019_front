@@ -3,7 +3,10 @@ package views
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.html.InputType
 import kotlinx.html.js.onClickFunction
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 import react.dom.input
 import react.dom.option
 import react.dom.p

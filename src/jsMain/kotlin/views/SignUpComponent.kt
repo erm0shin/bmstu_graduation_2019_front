@@ -6,10 +6,10 @@ import kotlinx.coroutines.launch
 import kotlinx.html.InputType
 import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onClickFunction
+import network.Transport
 import org.w3c.dom.HTMLInputElement
 import react.*
 import react.dom.input
-import network.Transport
 import styled.css
 import styled.styledButton
 import styled.styledDiv

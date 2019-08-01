@@ -4,7 +4,6 @@ import database.toPost
 import dto.AttendanceRequest
 import dto.NewUser
 import dto.PerformanceRequest
-import dto.User
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
@@ -13,11 +12,14 @@ import io.ktor.client.engine.apache.Apache
 import io.ktor.client.features.json.JacksonSerializer
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.request.post
+import io.ktor.client.request.url
 import io.ktor.features.ContentNegotiation
 import io.ktor.html.respondHtml
-import io.ktor.http.*
+import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.files
 import io.ktor.http.content.static
+import io.ktor.http.contentType
 import io.ktor.jackson.jackson
 import io.ktor.request.receive
 import io.ktor.response.respond
@@ -29,10 +31,10 @@ import io.ktor.sessions.*
 import kotlinx.html.*
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import org.h2.util.JdbcUtils.serializer
 import org.jetbrains.exposed.sql.selectAll
 import repositories.UserRepository
 import services.UserService
+import utils.ANALYTIC_URL
 
 data class UserSession(val name: String, val value: Long)
 
@@ -40,9 +42,6 @@ fun Application.main() {
     install(ContentNegotiation) {
         jackson {}
     }
-//    install(Sessions) {
-//        cookie<UserSession>("USER_COOKIE")
-//    }
     install(Sessions) {
         cookie<UserSession>(
             "USER_COOKIE",
@@ -61,12 +60,6 @@ fun Application.main() {
             serializer = JacksonSerializer()
         }
     }
-
-    val ANALYTIC_URL = ""
-
-//    database {
-//        SchemaUtils.create(Posts)
-//    }
 
     routing {
         get("/") {
@@ -124,7 +117,7 @@ fun Application.main() {
                 call.response.status(HttpStatusCode.BadRequest)
             } else {
                 val message = client.post<PerformanceRequest> {
-                    url(ANALYTIC_URL + "/performance")
+                    url("$ANALYTIC_URL/performance")
                     contentType(ContentType.Application.Json)
                     body = call.receive<PerformanceRequest>()
                 }
@@ -138,7 +131,7 @@ fun Application.main() {
                 call.response.status(HttpStatusCode.BadRequest)
             } else {
                 val message = client.post<AttendanceRequest> {
-                    url(ANALYTIC_URL + "/attendance")
+                    url("$ANALYTIC_URL/attendance")
                     contentType(ContentType.Application.Json)
                     body = call.receive<AttendanceRequest>()
                 }

@@ -190,6 +190,31 @@ class PerformanceComponent : RComponent<PerformanceProps, PerformanceState>() {
     }
 
 
+    private fun getUnit(): String {
+        return "ИУ6"
+    }
+
+    private fun getUnitType(): String {
+        return "Кафедра"
+    }
+
+    private fun getBegin(): String {
+        return "01.01.2019"
+    }
+
+    private fun getEnd(): String {
+        return "01.01.2019"
+    }
+
+    private fun getCourse(): String {
+        return "4"
+    }
+
+    private fun removeAllRows() {
+    }
+
+    private fun addRow() {
+    }
 
 
     private fun StyledDOMBuilder<DIV>.buildFetch() {

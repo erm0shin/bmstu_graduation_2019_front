@@ -3,7 +3,6 @@ package styles
 import kotlinx.css.*
 import kotlinx.css.properties.TextDecoration
 import kotlinx.css.properties.TextDecorationLine
-import kotlinx.css.properties.TextDecorationStyle
 import styled.StyleSheet
 
 object TableStyles : StyleSheet("TableStyles", isStatic = true) {
