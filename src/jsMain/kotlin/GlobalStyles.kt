@@ -6,7 +6,7 @@ object GlobalStyles {
     fun inject() {
         val styles = CSSBuilder(allowClasses = false).apply {
             body {
-                backgroundColor = Color("#e1e388")
+                backgroundColor = Color("#BEEFF4")
             }
         }
 

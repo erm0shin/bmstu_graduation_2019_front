@@ -7,9 +7,12 @@ import kotlinx.css.JustifyContent
 import kotlinx.html.DIV
 import kotlinx.html.js.onClickFunction
 import network.CommentClient
-import react.*
+import network.Transport
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 import react.dom.button
-import rpc.Transport
 import styled.StyledDOMBuilder
 import styled.css
 import styled.styledButton
@@ -46,7 +49,7 @@ class ButtonBarComponent : RComponent<ButtonBarProps, ButtonBarState>() {
             if (props.applicationPage != ApplicationPage.MAIN) {
                 styledDiv {
                     styledButton {
-                        +"Back to main menu"
+                        +"Назад в главное меню"
                         attrs.onClickFunction = {
                             props.updatePage(ApplicationPage.MAIN)
                         }
@@ -56,50 +59,47 @@ class ButtonBarComponent : RComponent<ButtonBarProps, ButtonBarState>() {
                     }
                 }
             }
-            styledDiv {
-                styledButton {
-                    +"SignIn"
-                    attrs.onClickFunction = {
-                        props.updatePage(ApplicationPage.SIGN_IN)
-                    }
-                    css {
-                        +CommonStyles.lightBtn
-                    }
-                }
-                styledButton {
-                    +"SignUp"
-                    attrs.onClickFunction = {
-                        props.updatePage(ApplicationPage.SIGN_UP)
-                    }
-                    css {
-                        +CommonStyles.redBtn
-                    }
-                }
-                styledButton {
-                    +"SignOut"
-                    attrs.onClickFunction = {
-                        val transport = Transport(coroutineContext)
-                        props.coroutineScope.launch {
-                            if (transport.signout()) {
-                                window.alert("Ура")
-                                props.updateCurrentUser(null)
-                                props.updatePage(ApplicationPage.MAIN)
-                            }
+            if (false) {
+                styledDiv {
+                    styledButton {
+                        +"SignIn"
+                        attrs.onClickFunction = {
+                            props.updatePage(ApplicationPage.SIGN_IN)
+                        }
+                        css {
+                            +CommonStyles.lightBtn
                         }
                     }
-                    css {
-                        +CommonStyles.redBtn
+                    styledButton {
+                        +"SignUp"
+                        attrs.onClickFunction = {
+                            props.updatePage(ApplicationPage.SIGN_UP)
+                        }
+                        css {
+                            +CommonStyles.redBtn
+                        }
                     }
-                }
+                    styledButton {
+                        +"SignOut"
+                        attrs.onClickFunction = {
+                            val transport = Transport(coroutineContext)
+                            props.coroutineScope.launch {
+                                if (transport.signout()) {
+                                    window.alert("Ура")
+                                    props.updateCurrentUser(null)
+                                    props.updatePage(ApplicationPage.MAIN)
+                                }
+                            }
+                        }
+                        css {
+                            +CommonStyles.redBtn
+                        }
+                    }
 //                callKtor()
+                }
             }
         }
     }
-
-
-
-
-
 
 
     private fun StyledDOMBuilder<DIV>.callKtor() {

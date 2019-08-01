@@ -41,14 +41,14 @@ class ApplicationComponent : RComponent<ApplicationProps, ApplicationState>() {
                     attrs.updatePage = this@ApplicationComponent::updatePage
                 }
             }
-            ApplicationPage.STATISTIC -> {
-                child(StatisticComponent::class) {
+            ApplicationPage.PERFORMANCE -> {
+                child(PerformanceComponent::class) {
                     attrs.coroutineScope = props.coroutineScope
                     attrs.updatePage = this@ApplicationComponent::updatePage
                 }
             }
-            ApplicationPage.ANALYTIC -> {
-                child(AnalyticComponent::class) {
+            ApplicationPage.ATTENDANCE -> {
+                child(AttendanceComponent::class) {
                     attrs.coroutineScope = props.coroutineScope
                     attrs.updatePage = this@ApplicationComponent::updatePage
                 }
@@ -66,6 +66,8 @@ class ApplicationComponent : RComponent<ApplicationProps, ApplicationState>() {
                     attrs.updatePage = this@ApplicationComponent::updatePage
                     attrs.updateCurrentUser = this@ApplicationComponent::updateCurrentUser
                 }
+            }
+            ApplicationPage.SIGN_OUT -> {
             }
         }
 

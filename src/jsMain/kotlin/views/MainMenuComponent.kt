@@ -1,13 +1,11 @@
 package views
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.css.JustifyContent
 import kotlinx.html.js.onClickFunction
 import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
-import react.dom.div
 import styled.css
 import styled.styledButton
 import styled.styledDiv
@@ -37,23 +35,50 @@ class MainMenuComponent : RComponent<MainMenuProps, MainMenuState>() {
             }
 
             styledDiv {
-                +"hello from MENU"
+                +"Главное меню"
                 css {
                     +CommonStyles.box
                 }
                 styledButton {
-                    +"Statistic"
+                    +"Авторизация"
                     attrs.onClickFunction = {
-                        props.updatePage(ApplicationPage.STATISTIC)
+                        props.updatePage(ApplicationPage.SIGN_IN)
                     }
                     css {
                         +CommonStyles.lightBtn
                     }
                 }
                 styledButton {
-                    +"Analytic"
+                    +"Регистрация"
                     attrs.onClickFunction = {
-                        props.updatePage(ApplicationPage.ANALYTIC)
+                        props.updatePage(ApplicationPage.SIGN_UP)
+                    }
+                    css {
+                        +CommonStyles.redBtn
+                    }
+                }
+                styledButton {
+                    +"Успеваемость"
+                    attrs.onClickFunction = {
+                        props.updatePage(ApplicationPage.PERFORMANCE)
+                    }
+                    css {
+                        +CommonStyles.lightBtn
+                    }
+                }
+                styledButton {
+                    +"Посещаемость"
+                    attrs.onClickFunction = {
+                        props.updatePage(ApplicationPage.ATTENDANCE)
+                    }
+                    css {
+                        +CommonStyles.lightBtn
+                    }
+                }
+                styledButton {
+                    +"Выйти из системы"
+                    attrs.onClickFunction = {
+                        props.updatePage(ApplicationPage.SIGN_OUT)
                     }
                     css {
                         +CommonStyles.redBtn

@@ -4,7 +4,9 @@ import kotlinx.coroutines.await
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import org.w3c.fetch.*
+import org.w3c.fetch.RequestCredentials
+import org.w3c.fetch.RequestInit
+import org.w3c.fetch.SAME_ORIGIN
 import utils.FAKE_JSON_TOKEN
 import utils.FAKE_JSON_URL
 import utils.GREETING_URL
